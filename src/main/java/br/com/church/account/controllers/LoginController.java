@@ -20,7 +20,7 @@ public class LoginController {
 
     private String atributoGlobal = "";
 
-    @GetMapping("/all")
+    @GetMapping("/all") //teste commit
     public ResponseEntity<List<LoginEntity>> listAll(){
         List<LoginEntity> all = loginRepository.findAll();
         String atributoLocal = "";
