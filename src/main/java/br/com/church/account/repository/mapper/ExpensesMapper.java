@@ -11,6 +11,14 @@ public class ExpensesMapper implements RowMapper<ExpenseEntity> {
 
     @Override
     public ExpenseEntity mapRow(ResultSet resultSet, int i) throws SQLException {
-        return null;
+        ExpenseEntity expenseEntity = new ExpenseEntity();
+
+        expenseEntity.setId((resultSet.getLong(("ID"))));
+        expenseEntity.setName(resultSet.getString("NAME"));
+        expenseEntity.setAmount(resultSet.getDouble("AMOUNT"));
+        expenseEntity.setCreationDate(resultSet.getDate("CREATION_DATE"));
+        expenseEntity.setResponsible(resultSet.getString("RESPONSIBLE"));
+
+        return expenseEntity;
     }
 }

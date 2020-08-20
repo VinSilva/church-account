@@ -47,8 +47,7 @@ public class LoginRepository {
         return loginEntity;
 
     }
-
-
+    
     public LoginEntity save(LoginDto loginDto)  {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();

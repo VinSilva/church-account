@@ -46,7 +46,4 @@ public class LoginController {
         loginRepository.delete(id);
         return ResponseEntity.ok().build();
     }
-
-
-
 }
