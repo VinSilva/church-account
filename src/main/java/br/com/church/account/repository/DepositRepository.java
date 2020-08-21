@@ -25,11 +25,10 @@ public class DepositRepository{
         return entitieList;
     }
 
-    public DepositEntity findByName(String name){
+    public List<DepositEntity> findByName(String name){
         Object[] object = new Object[]{name};
         String query = "select * from DEPOSIT where NAME = ?";
-        DepositEntity depositEntity = jdbcTemplate.queryForObject(query, object, new DepositMapper());
-        return depositEntity;
+         return jdbcTemplate.query(query, object, new DepositMapper());
     }
 
     public DepositEntity findById(Long id){

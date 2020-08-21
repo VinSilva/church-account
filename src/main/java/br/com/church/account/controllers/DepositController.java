@@ -28,14 +28,13 @@ public class DepositController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<DepositEntity> findByName(@PathVariable String name){
+    public ResponseEntity<List<DepositEntity>> findByName(@PathVariable String name){
         return ResponseEntity.ok(depositRepository.findByName(name));
     }
 
     @PostMapping
     public ResponseEntity<DepositEntity> save(@RequestBody DepositDto depositDto, UriComponentsBuilder uriBuilder){
-        depositDto.setAmount(depositService.processAmount(depositDto.getPay_type(), depositDto.getAmount()));
-        DepositEntity depositEntity = depositRepository.save(depositDto);
+        DepositEntity depositEntity = depositService.save(depositDto);
         URI uri = uriBuilder.path("/v1/deposit/{id}").buildAndExpand(depositEntity.getId()).toUri();
         return ResponseEntity.created(uri).body(depositEntity);
     }

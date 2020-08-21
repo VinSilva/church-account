@@ -1,9 +1,16 @@
 package br.com.church.account.services;
 
+import br.com.church.account.dto.DepositDto;
+import br.com.church.account.model.DepositEntity;
+import br.com.church.account.repository.DepositRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DepositService {
+
+    @Autowired
+    DepositRepository depositRepository;
 
     public DepositService(){
     }
@@ -18,5 +25,11 @@ public class DepositService {
         }else {
             return amount;
         }
+    }
+
+    public DepositEntity save(DepositDto depositDto){
+        depositDto.setAmount(this.processAmount(depositDto.getPay_type(), depositDto.getAmount()));
+        DepositEntity depositEntity = depositRepository.save(depositDto);
+        return depositEntity;
     }
 }
