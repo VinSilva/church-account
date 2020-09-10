@@ -34,10 +34,11 @@ public class LoginRepository {
 
 
     //IGNORAR OS METODOS ABAIXO ######################################
-    public LoginEntity findByName(String name){
+    public List<LoginEntity> findByName(String name){
         Object[] parameters = new Object[]{name};
-        LoginEntity loginEntity = jdbcTemplate.queryForObject("select * from LOGIN WHERE NAME = ?", parameters, new LoginMapper());
-        return loginEntity;
+        String query = "select * from LOGIN WHERE NAME = ?";
+        List<LoginEntity> loginEntityList = jdbcTemplate.query(query, parameters, new LoginMapper());
+        return loginEntityList;
 
     }
 

@@ -4,7 +4,6 @@ import br.com.church.account.dto.DepositDto;
 import br.com.church.account.model.DepositEntity;
 import br.com.church.account.repository.mapper.DepositMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -40,26 +39,26 @@ public class DepositRepository{
         return depositEntity;
     }
 
-    public DepositEntity save(DepositDto depositDto){
+    public DepositEntity save(DepositEntity depositEntity){
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String query = "insert into DEPOSIT(DEPOSIT_DATE, NAME, TYPE, PAY_TYPE, AMOUNT) values (?, ?, ?, ?, ?)";
+        String query = "insert into DEPOSIT(CREATION_DATE, NAME, RESPONSIBLE, PAYMENT_TYPE, AMOUNT) values (?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(connection -> {
                     PreparedStatement PreparedStatement = connection
                             .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-                    java.sql.Date sqlDate = new java.sql.Date(depositDto.getDeposit_date().getTime());
+                    java.sql.Date sqlDate = new java.sql.Date(depositEntity.getDeposit_date().getTime());
                     PreparedStatement.setDate(1, sqlDate);
-                    PreparedStatement.setString(2, depositDto.getName());
-                    PreparedStatement.setString(3, depositDto.getType());
-                    PreparedStatement.setString(4, depositDto.getPay_type());
-                    PreparedStatement.setDouble(5, depositDto.getAmount());
+                    PreparedStatement.setString(2, depositEntity.getName());
+                    PreparedStatement.setString(3, depositEntity.getResponsible());
+                    PreparedStatement.setString(4, depositEntity.getPay_type());
+                    PreparedStatement.setDouble(5, depositEntity.getAmount());
 
 
                     return PreparedStatement;
                 }, keyHolder);
-        DepositEntity depositEntity = this.findById(keyHolder.getKey().longValue());
-        return depositEntity;
+
+        return this.findById(keyHolder.getKey().longValue());
     }
 
     public void delete(Long id){
@@ -74,12 +73,12 @@ public class DepositRepository{
 
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            java.sql.Date sqlDate = new java.sql.Date(depositDto.getDeposit_date().getTime());
+            java.sql.Date sqlDate = new java.sql.Date(depositDto.getCreationDate().getTime());
 
             preparedStatement.setDate(1, sqlDate);
             preparedStatement.setString(2, depositDto.getName());
-            preparedStatement.setString(3, depositDto.getType());
-            preparedStatement.setString(4, depositDto.getPay_type());
+           // preparedStatement.setString(3, depositDto.getType());
+            preparedStatement.setString(4, depositDto.getPaymentType().name());
             preparedStatement.setDouble(5, depositDto.getAmount());
             preparedStatement.setLong(6, id);
 

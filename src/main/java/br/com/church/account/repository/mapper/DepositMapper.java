@@ -13,10 +13,10 @@ public class DepositMapper implements RowMapper<DepositEntity> {
             DepositEntity depositEntity = new DepositEntity();
 
             depositEntity.setId(resultSet.getLong("ID"));
-            depositEntity.setDeposit_date(resultSet.getDate("DEPOSIT_DATE"));
+            depositEntity.setDeposit_date(resultSet.getDate("CREATION_DATE"));
             depositEntity.setName(resultSet.getString("NAME"));
-            depositEntity.setType(resultSet.getString("TYPE"));
-            depositEntity.setPay_type(resultSet.getString("PAY_TYPE"));
+            depositEntity.setType(resultSet.getString("RESPONSIBLE"));
+            depositEntity.setPay_type(resultSet.getString("PAYMENT_TYPE"));
             depositEntity.setAmount(resultSet.getDouble("AMOUNT"));
 
             return depositEntity;

@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("v1/expenses")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ExpensesController {
 
     @Autowired
@@ -43,3 +44,4 @@ public class ExpensesController {
         return ResponseEntity.created(uri).body(expenseEntity);
     }
 }
+

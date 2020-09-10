@@ -20,6 +20,7 @@ public class LoginController {
 
     private String atributoGlobal = "";
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/all")
     public ResponseEntity<List<LoginEntity>> listAll(){
         List<LoginEntity> all = loginRepository.findAll();
@@ -28,16 +29,9 @@ public class LoginController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<LoginDto> findLoginByName(@PathVariable("name") String name){
-        return ResponseEntity.ok(new LoginDto(loginRepository.findByName(name)));
-    }
+    public ResponseEntity<List<LoginDto>> findLoginByName(@PathVariable("name") String name){
 
-    @PostMapping
-    public ResponseEntity<LoginDto> create(@RequestBody LoginDto loginDto, UriComponentsBuilder uriBuilder){
-
-        LoginEntity loginEntity = loginRepository.save(loginDto);
-        URI uri = uriBuilder.path("/v1/account/{id}").buildAndExpand(loginEntity.getId()).toUri();
-        return ResponseEntity.created(uri).body(new LoginDto(loginEntity));
+        return ResponseEntity.ok( LoginDto.converterToList(loginRepository.findByName(name)));
     }
 
     @DeleteMapping("/{id}")
@@ -45,5 +39,14 @@ public class LoginController {
 
         loginRepository.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping
+    public ResponseEntity<LoginDto> create(@RequestBody LoginDto loginDto, UriComponentsBuilder uriBuilder){
+
+        LoginEntity loginEntity = loginRepository.save(loginDto);
+        URI uri = uriBuilder.path("/v1/account/{id}").buildAndExpand(loginEntity.getId()).toUri();
+        return ResponseEntity.created(uri).body(new LoginDto(loginEntity));
     }
 }

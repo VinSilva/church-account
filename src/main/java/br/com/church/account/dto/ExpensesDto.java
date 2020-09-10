@@ -1,6 +1,8 @@
 package br.com.church.account.dto;
 
 import br.com.church.account.model.ExpenseEntity;
+import br.com.church.account.model.PaymentTypeEnum;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Date;
 
@@ -11,6 +13,8 @@ public class ExpensesDto {
     private Double amount;
     private Date creationDate;
 
+    private PaymentTypeEnum paymentType;
+
     public ExpensesDto(){
     }
 
@@ -19,13 +23,15 @@ public class ExpensesDto {
         this.responsible = expenseEntity.getResponsible();
         this.amount = expenseEntity.getAmount();
         this.creationDate = expenseEntity.getCreationDate();
+        this.paymentType = expenseEntity.getPaymentTypeEnum();
     }
 
-    public ExpensesDto(String name, String responsible, Double amount, Date creationDate){
+    public ExpensesDto(String name, String responsible, Double amount, Date creationDate, PaymentTypeEnum paymentType){
         this.name = name;
         this.responsible = responsible;
         this.amount = amount;
         this.creationDate = creationDate;
+        this.paymentType = paymentType;
     }
 
 
@@ -61,4 +67,8 @@ public class ExpensesDto {
         this.creationDate = creationDate;
     }
 
+    @JsonValue
+    public PaymentTypeEnum getPaymentType() {
+        return paymentType;
+    }
 }

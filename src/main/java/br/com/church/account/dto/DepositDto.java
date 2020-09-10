@@ -1,40 +1,41 @@
 package br.com.church.account.dto;
 
+import br.com.church.account.model.ExpenseEntity;
+import br.com.church.account.model.PaymentTypeEnum;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.Date;
 
 public class DepositDto {
 
-    private Date deposit_date;
+    private Date depositDate;
+    private Date creationDate;
     private String name;
-    private String type;
-    private String pay_type;
+    private String responsible;
+    private PaymentTypeEnum paymentType;
     private Double amount;
 
     public DepositDto(){
     }
 
-    public DepositDto(Date deposit_date, String name, String type, String pay_type, Double amount) {
+    public DepositDto(Date creationDate, String name, String responsible, PaymentTypeEnum paymentType, Double amount) {
 
-        this.deposit_date = deposit_date;
+        this.creationDate = creationDate;
         this.name = name;
-        this.type = type;
-        this.pay_type = pay_type;
+        this.responsible = responsible;
+        this.paymentType = paymentType;
         this.amount = amount;
     }
 
-    public DepositDto( Date deposit_date, String type, String pay_type, Double amount) {
-        this.deposit_date = deposit_date;
-        this.type = type;
-        this.pay_type = pay_type;
+    public DepositDto(Date creationDate, String responsible, PaymentTypeEnum paymentType, Double amount) {
+        this.creationDate = creationDate;
+        this.responsible = responsible;
+        this.paymentType = paymentType;
         this.amount = amount;
     }
 
-    public Date getDeposit_date() {
-        return deposit_date;
-    }
-
-    public void setDeposit_date(Date deposit_date) {
-        this.deposit_date = deposit_date;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public String getName() {
@@ -45,20 +46,13 @@ public class DepositDto {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    @JsonValue
+    public PaymentTypeEnum getPaymentType() {
+        return paymentType;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPay_type() {
-        return pay_type;
-    }
-
-    public void setPay_type(String pay_type) {
-        this.pay_type = pay_type;
+    public void setPaymentType(PaymentTypeEnum pay_type) {
+        this.paymentType = pay_type;
     }
 
     public Double getAmount() {
@@ -68,4 +62,14 @@ public class DepositDto {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public String getResponsible() {
+        return responsible;
+    }
+
+
 }

@@ -9,6 +9,7 @@ public class ExpenseEntity {
     private String responsible;
     private Double amount;
     private Date creationDate;
+    private PaymentTypeEnum paymentTypeEnum;
 
     public Long getId() {
         return id;
@@ -49,4 +50,10 @@ public class ExpenseEntity {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
+
+    public PaymentTypeEnum getPaymentTypeEnum() {
+        return paymentTypeEnum;
+    }
+
+
 }

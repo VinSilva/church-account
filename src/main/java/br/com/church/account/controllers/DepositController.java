@@ -3,7 +3,6 @@ package br.com.church.account.controllers;
 import br.com.church.account.dto.DepositDto;
 import br.com.church.account.model.DepositEntity;
 import br.com.church.account.repository.DepositRepository;
-import br.com.church.account.services.DepositService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("v1/deposit")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DepositController {
 
     @Autowired
     DepositRepository depositRepository;
-
-    @Autowired
-    DepositService depositService;
 
     @GetMapping("/{id}")
     public ResponseEntity<DepositEntity> findById(@PathVariable Long id){
@@ -56,7 +53,11 @@ public class DepositController {
 
     @PostMapping
     public ResponseEntity<DepositEntity> save(@RequestBody DepositDto depositDto, UriComponentsBuilder uriBuilder){
-        DepositEntity depositEntity = depositService.save(depositDto);
+        DepositEntity depositEntity = new DepositEntity(depositDto);
+        depositEntity.setLiquidAmountIfPaymentTypeIsDebitOrCredit();
+
+        depositEntity = depositRepository.save(depositEntity);
+
         URI uri = uriBuilder.path("/v1/deposit/{id}").buildAndExpand(depositEntity.getId()).toUri();
         return ResponseEntity.created(uri).body(depositEntity);
     }
