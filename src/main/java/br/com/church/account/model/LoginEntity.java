@@ -1,14 +1,21 @@
 package br.com.church.account.model;
 
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name="LOGIN")
 public class LoginEntity implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String name;
 
+    @Column
     private String password;
 
     public Long getId() {
